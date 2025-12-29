@@ -1420,6 +1420,13 @@ open class Terminal {
                     buffer.y -= 1
                     buffer.x = right
                 // TODO: find actual last cell based on width used
+                } else if buffer.lines[buffer.y + buffer.yBase].isWrapped && buffer.y > 0 {
+                    let originalY = buffer.y
+                    buffer.lines[buffer.y + buffer.yBase].isWrapped = false
+                    buffer.y -= 1
+                    buffer.x = right
+                    updateRange(buffer.y)
+                    updateRange(originalY)
                 } else if buffer.y == buffer.scrollTop {
                     buffer.x = right
                     buffer.y = buffer.scrollBottom
